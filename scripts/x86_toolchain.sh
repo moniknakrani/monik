@@ -3,7 +3,7 @@
 # Created by Lubos Kuzma
 # ISS Program, SADT, SAIT
 # August 2022
-
+#edits by Saiban: 64-bit is default
 
 if [ $# -lt 1 ]; then
         echo "Usage:"
@@ -15,7 +15,7 @@ if [ $# -lt 1 ]; then
         echo "-b | --break <break point>    Add breakpoint after running gdb. Default is _start."
         echo "-r | --run                    Run program in gdb automatically. Same as run command inside gdb env."
         echo "-q | --qemu                   Run executable in QEMU emulator. This will execute the program."
-        echo "-64| --x86-64                 Compile for 64bit (x86-64) system."
+        echo "-32| --x86-32                 Compile for 32bit (x86-32) system."
         echo "-o | --output <filename>      Output filename."
 
         exit 1
@@ -25,7 +25,7 @@ POSITIONAL_ARGS=()
 GDB=False
 OUTPUT_FILE=""
 VERBOSE=False
-BITS=False
+BITS=True
 QEMU=False
 BREAK="_start"
 RUN=False
@@ -44,8 +44,8 @@ while [[ $# -gt 0 ]]; do
                         VERBOSE=True
                         shift # past argument
                         ;;
-                -64|--x84-64)
-                        BITS=True
+                -32|--x86-32) 
+                        BITS=False
                         shift # past argument
                         ;;
                 -q|--qemu)
