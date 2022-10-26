@@ -10,13 +10,15 @@ if [ $# -lt 1 ]; then
         echo ""
         echo "arm_toolchain.sh  [-p | --port <port number, default 12222>] <assembly filename> [-o | --output <output filename>]"
         echo ""
-        echo "-v | --verbose                Show some information about steps performed."
-        echo "-g | --gdb                    Run gdb command on executable."
-        echo "-b | --break <break point>    Add breakpoint after running gdb. Default is main."
-        echo "-r | --run                    Run program in gdb automatically. Same as run command inside gdb env."
-        echo "-q | --qemu                   Run executable in QEMU emulator. This will execute the program."
-        echo "-p | --port                   Specify a port for communication between QEMU and GDB. Default is 12222."
-        echo "-o | --output <filename>      Output filename."
+        echo "-v    | --verbose                Show some information about steps performed."
+        echo "-g    | --gdb                    Run gdb command on executable."
+        echo "-b    | --break <break point>    Add breakpoint after running gdb. Default is main."
+        echo "-r    | --run                    Run program in gdb automatically. Same as run command inside gdb env."
+        echo "-rp3b |                       Using Raspberry 3B."
+        echo "-rp4  |                        Using Raspberry 4 (64bit)."
+        echo "-q    | --qemu                   Run executable in QEMU emulator. This will execute the program."
+        echo "-p    | --port                   Specify a port for communication between QEMU and GDB. Default is 12222."
+        echo "-o    | --output <filename>      Output filename."
 
         exit 1
 fi
@@ -29,6 +31,9 @@ QEMU=False
 PORT="12222"
 BREAK="main"
 RUN=False
+RP3B=True # using Raspberry Pi 3B
+RP4=True  # using Raspberry Pi 4
+
 while [[ $# -gt 0 ]]; do
         case $1 in
                 -g|--gdb)
@@ -50,6 +55,14 @@ while [[ $# -gt 0 ]]; do
                         ;;
                 -r|--run)
                         RUN=True
+                        shift # past argument
+                        ;;
+                -rp3b|)
+                        RP3B=True
+                        shift # past argument
+                        ;;
+                 -rp4|)
+                        RP4=True
                         shift # past argument
                         ;;
                 -b|--break)
@@ -100,9 +113,17 @@ if [ "$VERBOSE" == "True" ]; then
 
 fi
 
+if [ "$RP3B" == "True" ]; then
 # Raspberry Pi 3B
 arm-linux-gnueabihf-gcc -ggdb -mfpu=vfp -march=armv6+fp -mabi=aapcs-linux $1 -o $OUTPUT_FILE -static -nostdlib &&
 
+fi
+
+if [ "$RP4" == "True" ]; then
+# Raspberry pi 4
+arm-linux-gnueabihf-gcc -ggdb -march=armv8-a+fp+simd -mabi=aapcs-linux $1 -o $OUTPUT_FILE -static -nostdlib &&
+
+fi
 
 if [ "$VERBOSE" == "True" ]; then
 
