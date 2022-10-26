@@ -8,14 +8,14 @@
 if [ $# -lt 1 ]; then
         echo "Usage:"
         echo ""
-        echo "x64_toolchain.sh [ options ] <assembly filename> [-o | --output <output filename>]"
+        echo "x86_toolchain.sh [ options ] <assembly filename> [-o | --output <output filename>]"
         echo ""
         echo "-v | --verbose                Show some information about steps performed."
         echo "-g | --gdb                    Run gdb command on executable."
         echo "-b | --break <break point>    Add breakpoint after running gdb. Default is _start."
         echo "-r | --run                    Run program in gdb automatically. Same as run command inside gdb env."
         echo "-q | --qemu                   Run executable in QEMU emulator. This will execute the program."
-        echo "-32| --x86                    Compile for 32bit (x86) system."
+        echo "-64| --x86-64                 Compile for 64bit (x86-64) system."
         echo "-o | --output <filename>      Output filename."
 
         exit 1
@@ -25,7 +25,7 @@ POSITIONAL_ARGS=()
 GDB=False
 OUTPUT_FILE=""
 VERBOSE=False
-BITS=True # Bits true default 
+BITS=False
 QEMU=False
 BREAK="_start"
 RUN=False
@@ -44,8 +44,8 @@ while [[ $# -gt 0 ]]; do
                         VERBOSE=True
                         shift # past argument
                         ;;
-                -32|--x84)
-                        BITS=False  # Bits false for 32 bit
+                -64|--x84-64)
+                        BITS=True
                         shift # past argument
                         ;;
                 -q|--qemu)
