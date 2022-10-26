@@ -3,6 +3,7 @@ This serves as the main repo for ITSC 204 Assignment 1
 
 # Contributions List:
 Lubos Kuzma (https://www.linkedin.com/in/lubos-kuzma-0719a586)
+Gurkirat Singh
 
 
 # Suggested TODO:
@@ -11,7 +12,7 @@ Lubos Kuzma (https://www.linkedin.com/in/lubos-kuzma-0719a586)
 - make 64bit the default
 
 ## ARM Toolchain:
-- add Raspberry Pi 3B or 4 (selection through arguments)
+- ~~add Raspberry Pi 3B or 4 (selection through arguments)~~
 - add 64bit system option
 
 ## General:
