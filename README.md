@@ -2,15 +2,15 @@
 This serves as the main repo for ITSC 204 Assignment 1
 
 # Contributions List:
-Lubos Kuzma (https://www.linkedin.com/in/lubos-kuzma-0719a586)
-
-Gurkirat Singh
+Lubos Kuzma (https://www.linkedin.com/in/lubos-kuzma-0719a586)  
+Gurkirat Singh  
+Saiban Muhammad  
 
 
 # Suggested TODO:
 ## x86 Toolchain:
 - modify script to be based on GCC
-- make 64bit the default
+- ~~make 64bit the default~~
 
 ## ARM Toolchain:
 - ~~add Raspberry Pi 3B or 4 (selection through arguments)~~
