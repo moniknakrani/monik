@@ -113,24 +113,18 @@ fi
 if [ "$VERBOSE" == "True" ]; then
 
         echo "NASM finished"
-        echo "Linking ..."
+        echo "Linking with GCC ..."
 
-fi
-
-if [ "$VERBOSE" == "True" ]; then
-
-        echo "NASM finished"
-        echo "Linking ..."
 fi
 
 if [ "$BITS" == "True" ]; then
 
-        ld -m elf_x86_64 $OUTPUT_FILE.o -o $OUTPUT_FILE && echo ""
+        gcc -m64 -nostdlib $OUTPUT_FILE.o -o $OUTPUT_FILE && echo ""
 
 
 elif [ "$BITS" == "False" ]; then
 
-        ld -m elf_i386 $OUTPUT_FILE.o -o $OUTPUT_FILE && echo ""
+        gcc -m32 -nostdlib $OUTPUT_FILE.o -o $OUTPUT_FILE && echo ""
 
 fi
 
