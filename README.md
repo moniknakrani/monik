@@ -1,10 +1,12 @@
 # AssemblyToolchains
 This serves as the main repo for ITSC 204 Assignment 1
 
-# Contributions List:
-Lubos Kuzma (https://www.linkedin.com/in/lubos-kuzma-0719a586)  
+# Contributor List (alphapbetical order, first name):
+Adeela Nassar  
 Gurkirat Singh  
+Lubos Kuzma (https://www.linkedin.com/in/lubos-kuzma-0719a586)  
 Saiban Muhammad  
+
 
 
 # Suggested TODO:
