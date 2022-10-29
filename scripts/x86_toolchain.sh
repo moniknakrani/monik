@@ -4,6 +4,7 @@
 # ISS Program, SADT, SAIT
 # August 2022
 #edits by Saiban: 64-bit is default
+# Edits by Ben: Implemented getopt for command line
 
 if [ $# -lt 1 ]; then
         echo "Usage:"
@@ -21,7 +22,6 @@ if [ $# -lt 1 ]; then
         exit 1
 fi
 
-POSITIONAL_ARGS=()
 GDB=False
 OUTPUT_FILE=""
 VERBOSE=False
@@ -29,6 +29,14 @@ BITS=True
 QEMU=False
 BREAK="_start"
 RUN=False
+
+# Use getopt to parse command line options. Can be -(short) and/or --(long).
+options=$(getopt -o go:v3qrb: --long gdb,output:,verbose,x86-32,qemu,run,break: -- "$@")
+
+# Set positional parameters to the result from getopt.
+eval set -- "$options"
+
+# Loop through positional paramters.
 while [[ $# -gt 0 ]]; do
         case $1 in
                 -g|--gdb)
@@ -44,7 +52,7 @@ while [[ $# -gt 0 ]]; do
                         VERBOSE=True
                         shift # past argument
                         ;;
-                -32|--x86-32) 
+                -3|--x86-32) # Getopt only takes one char for short commands (-32 will no longer work).
                         BITS=False
                         shift # past argument
                         ;;
@@ -61,26 +69,27 @@ while [[ $# -gt 0 ]]; do
                         shift # past argument
                         shift # past value
                         ;;
-                -*|--*)
-                        echo "Unknown option $1"
-                        exit 1
+                --)            # Case '--' is always the last arg of getopt args.
+                        shift; # past argument 
+                        break  # exit the loop 
                         ;;
-                *)
-                        POSITIONAL_ARGS+=("$1") # save positional arg
+                *)             # Error case
+                        echo "Option $1 is invalid"
                         shift # past argument
                         ;;
         esac
 done
 
-set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+# Use original args that were not modified by getopt.
+INPUT_FILE="$@"
 
-if [[ ! -f $1 ]]; then
+if [[ ! -f $INPUT_FILE ]]; then
         echo "Specified file does not exist"
         exit 1
 fi
 
 if [ "$OUTPUT_FILE" == "" ]; then
-        OUTPUT_FILE=${1%.*}
+        OUTPUT_FILE=${INPUT_FILE%.*}
 fi
 
 if [ "$VERBOSE" == "True" ]; then
@@ -89,7 +98,7 @@ if [ "$VERBOSE" == "True" ]; then
         echo "  RUN = ${RUN}"
         echo "  BREAK = ${BREAK}"
         echo "  QEMU = ${QEMU}"
-        echo "  Input File = $1"
+        echo "  Input File = $INPUT_FILE"
         echo "  Output File = $OUTPUT_FILE"
         echo "  Verbose = $VERBOSE"
         echo "  64 bit mode = $BITS" 
