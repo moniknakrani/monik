@@ -3,6 +3,7 @@ This serves as the main repo for ITSC 204 Assignment 1
 
 # Contributor List (alphapbetical order, first name):
 Adeela Nassar  
+Benjamin Day  
 Gurkirat Singh  
 Lubos Kuzma (https://www.linkedin.com/in/lubos-kuzma-0719a586)  
 Saiban Muhammad  
@@ -19,6 +20,7 @@ Saiban Muhammad
 - add 64bit system option
 
 ## General:
+- ~~improvements to arguments structure/parsing~~
 - annotate every line
 - create documentation
 - general improvements to Help (no arguments)
